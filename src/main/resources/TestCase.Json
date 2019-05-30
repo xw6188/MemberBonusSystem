@@ -1,0 +1,179 @@
+# 第一天 for 7 USERS
+http://localhost:8080/api/addUser
+http://localhost:8080/api/addOrder
+
+{
+"userId": 415,
+"mobile": "13763329415",
+"userName": "ben",
+"nickName": "kkkd",
+"nominator": 0
+}
+
+{
+"userId": 416,
+
+"mobile": "13763329416",
+"userName": "Alice",
+"nickName": "SSSDS",
+"nominator": 415
+}
+
+{
+"userId": 417,
+"mobile": "13763329417",
+"userName": "wangdacui",
+"nickName": "王大锤",
+"nominator": 416
+}
+
+{
+"userId": 418,
+"mobile": "13763329418",
+"userName": "Bentest",
+"nickName": "aaddk",
+"nominator": 415
+}
+
+{
+"userId": 419,
+"mobile": "13763329419",
+"userName": "sksksk",
+"nickName": "dafsd",
+"nominator": 418
+}
+
+{
+"userId": 420,
+"mobile": "13763329420",
+"userName": "InsertbyAPI",
+"nickName": "test",
+"nominator": 416
+}
+
+{
+"userId": 422,
+"mobile": "13763329422",
+"userName": "testcase2",
+"nickName": "tes11t",
+"nominator": 418
+}
+
+{	"orderId":10001,
+"userId":415,
+"amount":1000.0
+}
+
+{
+"orderId":10002,
+"userId":416,
+"amount":500.0
+}
+
+{
+"orderId":10003,
+"userId":417,
+"amount":600.0
+}
+
+{
+"orderId":10004,
+"userId":418,
+"amount":1200
+}
+
+{
+"orderId":10005,
+"userId":419,
+"amount":300
+}
+
+{
+"orderId":10006,
+"userId":420,
+"amount":400
+}
+
+{
+"orderId":10007,
+"userId":422,
+"amount":200
+}
+
+#day 2
+{
+"userId": 423,
+"mobile": "13763329423",
+"userName": "NextDaycase1",
+"nickName": "test1",
+"nominator": 415
+}
+
+{
+"userId": 424,
+"mobile": "13763329424",
+"userName": "NextDaycase2",
+"nickName": "test2",
+"nominator": 418
+}
+
+{
+"userId": 421,
+"mobile": "13763329421",
+"userName": "NextDaycase3",
+"nickName": "test3",
+"nominator": 419
+}
+
+{
+"orderId":10008,
+"userId":423,
+"amount":190.0
+}
+
+{
+"orderId":10009,
+"userId":424,
+"amount":400.0
+}
+
+{
+"orderId":10010,
+"userId":421,
+"amount":200
+}
+
+{
+"orderId":10011,
+"userId":422,
+"amount":2000
+}
+
+#day 3
+http://localhost:8080/api/addOrder
+{
+"orderId":10012,
+"userId":424,
+"amount":10000.0
+}
+
+#提现申请
+http://localhost:8080/api/requestWithdraw
+{
+"userID": 416,
+"accountName": "李四",
+"accountType": "支付宝",
+"accountBank": "邮箱名称",
+"accountID": "dalkfdk@163.com",
+"amount": 100.0,
+"status": "审核中"
+}
+#提现审批
+http://localhost:8080/api/updateWithdrawStatus
+
+{
+"withdrawID":  9,
+"userID":  416,
+"withdrawDetail": "已经打电话确认账号",
+"status": "审核通过"
+}

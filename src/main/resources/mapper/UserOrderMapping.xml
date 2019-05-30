@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.sgzspringbootapi.mapper.UserOrderMapper">
+
+   <resultMap id="BaseResultMap" type="com.ben.sgzspringbootapi.entity.UserOrder">
+        <result column="orderId" jdbcType="VARCHAR" property="orderId" />
+        <result column="userID" jdbcType="INTEGER" property="userID" />
+        <result column="amount" jdbcType="FLOAT" property="amount" />
+        <result column="discount" jdbcType="INTEGER" property="discount" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="addNewUserOrder" parameterType="com.ben.sgzspringbootapi.entity.UserOrder">
+        insert into userorder (orderId, userID, amount, discount,rawAmount) VALUES(#{orderId},#{userId},#{amount},#{discount},#{rawAmount})
+    </insert>
+
+    <delete id="deleteOrder" parameterType="int">
+        delete from userorder where orderId = #{orderId}
+    </delete>
+
+    <select id="selectOrder" resultType="com.ben.sgzspringbootapi.entity.UserOrder">
+        select * from userorder where orderId = #{orderId}
+    </select>
+    
+    <select id="orderListByDate" resultType="com.ben.sgzspringbootapi.entity.UserOrder" parameterType="DATE">
+        SELECT * FROM userorder WHERE DATE_FORMAT(createTime, '%Y-%m-%d') = #{date, jdbcType=DATE}
+    </select>
+
+    <select id="orderListByUserID" resultType="com.ben.sgzspringbootapi.entity.UserOrder">
+        SELECT * FROM userorder WHERE userID = #{userID}
+    </select>
+</mapper>

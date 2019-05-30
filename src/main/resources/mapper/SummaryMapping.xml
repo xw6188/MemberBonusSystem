@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.sgzspringbootapi.mapper.SummaryMapper">
+
+    <resultMap id="BaseResultMap" type="com.ben.sgzspringbootapi.entity.Summary">
+        <result column="summaryID" jdbcType="INTEGER" property="summaryID" />
+        <result column="userID" jdbcType="INTEGER" property="userID" />
+        <result column="summaryDate" jdbcType="DATE" property="bonusDate" javaType="java.util.Date"/>
+        <result column="ttorder" jdbcType="FLOAT" property="ttorder" />
+        <result column="ttbonus" jdbcType="FLOAT" property="ttbonus" />
+        <result column="teamttorder" jdbcType="FLOAT" property="teamttorder" />
+        <result column="teamttbonus" jdbcType="FLOAT" property="teamttbonus" />
+        <result column="teampercent" jdbcType="FLOAT" property="teampercent" />
+        <result column="summarydetail" jdbcType="VARCHAR" property="summarydetail" />
+    </resultMap>
+
+    <insert id="addNewSummary" parameterType="com.ben.sgzspringbootapi.entity.Summary">
+        insert into Summary (userID, summaryDate, ttorder, ttbonus, teamttorder, teamttbonus, teampercent, summarydetail)
+        VALUES(#{userID},#{summaryDate},#{ttorder},#{ttbonus},#{teamttorder},#{teamttbonus},#{teampercent},#{summarydetail})
+    </insert>
+
+    <select id="summaryList" resultType="com.ben.sgzspringbootapi.entity.Summary">
+        select * from Summary
+    </select>
+
+    <select id="selectSummarybyID" resultType="com.ben.sgzspringbootapi.entity.Summary">
+        select * from Summary where userID = #{userID}
+        <if test="startTime != null ">
+            and summaryDate &gt;= #{startTime}
+        </if>
+        <if test="endTime != null  ">
+            and summaryDate &lt;= #{endTime}
+        </if>
+        order by summaryDate desc
+    </select>
+
+    <select id="selectTodaySummarybyID" resultType="com.ben.sgzspringbootapi.entity.Summary">
+        select * from Summary where userID = #{userID} and summaryDate = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    </select>
+
+    <select id="selectTodaySummaryList" resultType="com.ben.sgzspringbootapi.entity.Summary">
+        select * from Summary where summaryDate = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+    </select>
+
+    <select id="selectYesterdaySummaryList" resultType="com.ben.sgzspringbootapi.entity.Summary">
+        select * from Summary where summaryDate = DATE_FORMAT(CURDATE()-1, '%Y-%m-%d')
+    </select>
+
+    <select id="onlyKeepCompanySummary" resultType="com.ben.sgzspringbootapi.entity.Summary">
+        DELETE FROM summary
+        WHERE summaryDate = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+        AND userID NOT IN (SELECT userID FROM USER WHERE treePosition =1);
+    </select>
+
+    <update id="updateSummary" parameterType="com.ben.sgzspringbootapi.entity.Summary" >
+        update Summary set
+        ttorder = #{ttorder},
+        ttbonus = #{ttbonus},
+        teamttorder = #{teamttorder},
+        teamttbonus = #{teamttbonus},
+        teampercent = #{teampercent},
+        summarydetail = #{summarydetail}
+        where summaryID=#{summaryID}
+    </update>
+
+    <select id="selectSummaryAll" resultType="com.ben.sgzspringbootapi.entity.Summary">
+        select * from Summary
+    </select>
+
+</mapper>

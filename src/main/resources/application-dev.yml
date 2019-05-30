@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxZTKJ7
+
+spring:
+  datasource:
+    #内网地址
+    #    url: jdbc:mysql://rm-bp137lbc7uuh69aqv.mysql.rds.aliyuncs.com:3306/sgzdb?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    #外网地址
+    #url: jdbc:mysql://rm-bp137lbc7uuh69aqvxo.mysql.rds.aliyuncs.com:3306/sgzdb?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    #    username: admin123
+    #    password: ENC(TI8Gy+o1lCubkhgs3jNppOPHtQABnqCb)
+    #本地测试
+    url: jdbc:mysql://localhost:3306/sgzdb?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    username: admin
+    password: ENC(+Zp3byrSt6CxwbWrx00/98WiOSnFx9WH)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    time-zone: GMT+8
+    date_format: yyyy-MM-dd HH:mm:ss
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapping.xml
+  type-aliases-package: com.ben.sgzspringbootapi.entity
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

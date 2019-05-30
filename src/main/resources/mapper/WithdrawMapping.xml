@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.sgzspringbootapi.mapper.WithdrawMapper">
+
+    <resultMap id="BaseResultMap" type="com.ben.sgzspringbootapi.entity.Withdraw">
+        <result column="withdrawID" jdbcType="INTEGER" property="withdrawID" />
+        <result column="userID" jdbcType="INTEGER" property="userID" />
+        <result column="mobile" jdbcType="VARCHAR" property="accountType" />
+        <result column="accountName" jdbcType="VARCHAR" property="accountName" />
+        <result column="accountType" jdbcType="VARCHAR" property="accountType" />
+        <result column="accountBank" jdbcType="VARCHAR" property="accountBank" />
+        <result column="accountID" jdbcType="VARCHAR" property="accountID" />
+        <result column="withdrawDetail" jdbcType="VARCHAR" property="withdrawDetail" />
+        <result column="amount" jdbcType="FLOAT" property="amount" />
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="requestWithdraw" parameterType="com.ben.sgzspringbootapi.entity.Withdraw">
+        insert into withdraw (userID, mobile, accountName, accountType, accountBank, accountID, withdrawDetail, amount, status)
+        VALUES(#{userID},#{mobile},#{accountName},#{accountType},#{accountBank},#{accountID},#{withdrawDetail},#{amount},#{status})
+    </insert>
+
+    <select id="withdrawListByUserID" resultType="com.ben.sgzspringbootapi.entity.Withdraw">
+        select * from withdraw where userID = #{userID}
+    </select>
+
+    <select id="selectWithdrawByID" resultType="com.ben.sgzspringbootapi.entity.Withdraw">
+        select * from withdraw where withdrawID = #{withdrawID}
+    </select>
+
+    <select id="withdrawListAll" resultType="com.ben.sgzspringbootapi.entity.Withdraw">
+        select * from withdraw
+    </select>
+
+    <update id="updateWithdraw" parameterType="com.ben.sgzspringbootapi.entity.Withdraw" >
+        update withdraw set
+        amount = #{amount},
+        withdrawDetail = #{withdrawDetail},
+        status = #{status}
+        where withdrawID = #{withdrawID}
+    </update>
+
+</mapper>

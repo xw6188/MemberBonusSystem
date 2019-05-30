@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.sgzspringbootapi.mapper.UserAccountMapper">
+
+    <resultMap id="BaseResultMap" type="com.ben.sgzspringbootapi.entity.UserAccount">
+        <result column="userID" jdbcType="INTEGER" property="userId" />
+        <result column="treePosition" jdbcType="INTEGER" property="treePosition" />
+        <result column="treeLeft" jdbcType="INTEGER" property="treeLeft" />
+        <result column="treeRight" jdbcType="INTEGER" property="treeRight" />
+        <result column="calamount" jdbcType="FLOAT" property="calamount" />
+        <result column="teampplNum" jdbcType="INTEGER" property="teampplNum" />
+        <result column="teamtotal" jdbcType="FLOAT" property="teamtotal" />
+        <result column="lastteamamt" jdbcType="FLOAT" property="lastteamamt" />
+        <result column="lastteambonus" jdbcType="FLOAT" property="lastteambonus" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="userName" jdbcType="VARCHAR" property="userName"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+        <result column="parent" jdbcType="INTEGER" property="parent"/>
+        <result column="nominator" jdbcType="INTEGER" property="nominator"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="upgrade" jdbcType="INTEGER" property="upgrade"/>
+        <result column="grade" jdbcType="INTEGER" property="grade"/>
+        <result column="fund" jdbcType="INTEGER" property="fund"/>
+        <result column="totalBonus" jdbcType="FLOAT" property="totalBonus" />
+        <result column="availBonus" jdbcType="FLOAT" property="availBonus" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <select id="userAccountList" resultType="com.ben.sgzspringbootapi.entity.UserAccount">
+        SELECT user.userId, user.treePosition, user.treeLeft, user.treeRight, user.calamount, user.teampplNum, user.teamtotal, user.lastteamamt, user.lastteambonus,
+        user.mobile, user.userName, user.nickName, user.parent, user.nominator, user.level, user.upgrade, user.grade, user.fund, account.totalBonus, account.availBonus, account.totalOrderAmt, account.createTime
+        FROM USER, account WHERE user.userID = account.userId
+    </select>
+
+    <!--<select id="userAccountListSearch" parameterType="com.ben.sgzspringbootapi.entity.User" resultType="com.ben.sgzspringbootapi.entity.UserAccount">
+        SELECT user.userId, user.treePosition, user.treeLeft, user.treeRight, user.calamount, user.teampplNum, user.teamtotal, user.lastteamamt, user.lastteambonus,
+        user.mobile, user.userName, user.nickName, user.parent, user.nominator, user.level, user.upgrade, user.grade, user.fund, account.totalBonus, account.availBonus, account.totalOrderAmt, account.createTime
+        FROM USER, account WHERE user.userID = account.userId
+        <if test="userId != null">
+            and user.userId = #{userId}
+        </if>
+        <if test="mobile != null">
+            and user.mobile = #{mobile}
+        </if>
+        <if test="userName !=null || userName !=''">
+            <bind name="userLikeName" value="'%' + userName + '%'"/>
+            and user.userName like #{userLikeName}
+        </if>
+    </select>-->
+    <select id="userAccountListSearch" parameterType="com.ben.sgzspringbootapi.entity.User" resultType="com.ben.sgzspringbootapi.entity.UserAccount">
+        SELECT user.userId, user.treePosition, user.treeLeft, user.treeRight, user.calamount, user.teampplNum, user.teamtotal, user.lastteamamt, user.lastteambonus,
+        user.mobile, user.userName, user.nickName, user.parent, user.nominator, user.level, user.upgrade, user.grade, user.fund, account.totalBonus, account.availBonus, account.totalOrderAmt, account.createTime
+        FROM USER, account WHERE user.userID = account.userId
+        <if test="userId != null and userId != 0  and userId != ''">
+            and user.userId = #{userId}
+        </if>
+        <if test="mobile != null  and mobile != 0  and mobile != ''">
+            and user.mobile = #{mobile}
+        </if>
+        <if test="nickName !=null and nickName !=''">
+
+            and user.nickName like concat(concat('%',#{nickName}),'%')
+        </if>
+        <if test="level != null  and level != 0  and level != ''">
+            and user.level = #{level}
+        </if>
+
+    </select>
+
+</mapper>

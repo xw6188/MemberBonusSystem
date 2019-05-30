@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.sgzspringbootapi.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.ben.sgzspringbootapi.entity.User">
+        <result column="userID" jdbcType="INTEGER" property="userId" />
+        <result column="treePosition" jdbcType="INTEGER" property="treePosition" />
+        <result column="treeLeft" jdbcType="INTEGER" property="treeLeft" />
+        <result column="treeRight" jdbcType="INTEGER" property="treeRight" />
+        <result column="calamount" jdbcType="FLOAT" property="calamount" />
+        <result column="teampplNum" jdbcType="INTEGER" property="teampplNum" />
+        <result column="teamtotal" jdbcType="FLOAT" property="teamtotal" />
+        <result column="lastteamamt" jdbcType="FLOAT" property="lastteamamt" />
+        <result column="lastteambonus" jdbcType="FLOAT" property="lastteambonus" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="userName" jdbcType="VARCHAR" property="userName"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+        <result column="parent" jdbcType="INTEGER" property="parent"/>
+        <result column="nominator" jdbcType="INTEGER" property="nominator"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="upgrade" jdbcType="INTEGER" property="upgrade"/>
+        <result column="grade" jdbcType="INTEGER" property="grade"/>
+        <result column="fund" jdbcType="INTEGER" property="fund"/>
+    </resultMap>
+
+    <select id="userListBothLeg" resultType="com.ben.sgzspringbootapi.entity.User">
+        select * from user where (treeLeft != 0 and treeRight != 0)
+    </select>
+
+    <select id="userListNonLeaf" resultType="com.ben.sgzspringbootapi.entity.User">
+        select * from user where (treeLeft != 0 or treeRight != 0)
+    </select>
+
+    <select id="userList" resultType="com.ben.sgzspringbootapi.entity.User">
+        select * from user
+    </select>
+
+    <select id="resetLastteamamt">
+        update user set lastteamamt = 0
+    </select>
+
+    <select id="selectbyUserId" resultType="com.ben.sgzspringbootapi.entity.User">
+        select * from user where userID = #{id}
+    </select>
+
+    <select id="selectbyPosition" resultType="com.ben.sgzspringbootapi.entity.User">
+        select * from user where treePosition = #{position}
+    </select>
+
+    <delete id="deletebyUserId" parameterType="int">
+        delete from user where userId = #{id}
+    </delete>
+
+    <update id="updateUserName" parameterType="com.ben.sgzspringbootapi.entity.User" >
+        update user set userName = #{userName} where userID=#{userId}
+    </update>
+
+    <update id="updateUser" parameterType="com.ben.sgzspringbootapi.entity.User" >
+        update user set
+        userID = #{userId},
+        userName = #{userName},
+        treePosition = #{treePosition},
+        treeLeft = #{treeLeft},
+        treeRight = #{treeRight},
+        calamount = #{calamount},
+        teampplNum = #{teampplNum},
+        teamtotal = #{teamtotal},
+        lastteamamt = #{lastteamamt},
+        lastteambonus = #{lastteambonus},
+        mobile = #{mobile},
+        userName = #{userName},
+        nickName = #{nickName},
+        parent = #{parent},
+        nominator = #{nominator},
+        level = #{level},
+        upgrade = #{upgrade},
+        grade = #{grade},
+        fund = #{fund}
+        where userID=#{userId}
+    </update>
+
+    <insert id="addNewUser" parameterType="com.ben.sgzspringbootapi.entity.User">
+        insert into user (userID, treePosition, treeLeft, treeRight, calamount, teampplNum, teamtotal, lastteamamt, lastteambonus, mobile, userName, nickName, parent, nominator, level, upgrade, grade, fund)
+        VALUES(#{userId},#{treePosition},#{treeLeft},#{treeRight},#{calamount},#{teampplNum},#{teamtotal},#{lastteamamt},#{lastteambonus},#{mobile},#{userName},#{nickName},#{parent},#{nominator},#{level},#{upgrade},#{grade},#{fund})
+    </insert>
+
+    <update id="modifyall" >
+        update user set userId=#{id} , mobile = #{mobile}  where id=#{oid}
+    </update>
+
+</mapper>

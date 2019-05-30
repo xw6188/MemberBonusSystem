@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.sgzspringbootapi.mapper.BonusMapper">
+
+    <resultMap id="BaseResultMap" type="com.ben.sgzspringbootapi.entity.Bonus">
+        <result column="bonusID" jdbcType="INTEGER" property="bonusID" />
+        <result column="userID" jdbcType="INTEGER" property="userID" />
+        <result column="relatedUserID" jdbcType="INTEGER" property="relatedUserID" />
+        <result column="bonusType" jdbcType="VARCHAR" property="bonusType" />
+        <result column="bonusAmt" jdbcType="FLOAT" property="bonusAmt" />
+        <result column="bonusdetail" jdbcType="VARCHAR" property="bonusdetail" />
+        <result column="bonusDate" jdbcType="DATE" property="bonusDate" javaType="java.util.Date"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="addNewBonus" parameterType="com.ben.sgzspringbootapi.entity.Bonus">
+        insert into Bonus (userID, relatedUserID, bonusType, bonusAmt, bonusdetail, bonusDate) VALUES(#{userID},#{relatedUserID},#{bonusType},#{bonusAmt},#{bonusdetail},#{bonusDate, jdbcType=DATE})
+    </insert>
+
+    <delete id="deleteBonus" parameterType="int">
+        delete from Bonus where bonusID = #{bonusID}
+    </delete>
+
+    <select id="selectBonus" resultType="com.ben.sgzspringbootapi.entity.Bonus">
+        select * from Bonus where bonusID = #{bonusID}
+    </select>
+
+    <select id="selectBonusByUserID" resultType="com.ben.sgzspringbootapi.entity.Bonus">
+        select * from Bonus where userID = #{userID} order by bonusDate desc
+    </select>
+
+    <select id="selectBonusByUserIDfund" resultType="com.ben.sgzspringbootapi.entity.Bonus">
+        select * from Bonus where userID = #{userID} and bonusType = 'fund'
+
+        order by bonusDate desc
+    </select>
+
+    <select id="bonusListByDate" resultType="com.ben.sgzspringbootapi.entity.Bonus" parameterType="DATE">
+        SELECT * FROM Bonus WHERE bonusDate = #{date, jdbcType=DATE}
+    </select>
+
+    <select id="selectBonusByUserIDSearch" resultType="com.ben.sgzspringbootapi.entity.Bonus" >
+        select * from Bonus where userID = #{userID}
+        <if test="startTime != null ">
+            and bonusDate &gt;= #{startTime}
+        </if>
+        <if test="endTime != null  ">
+            and bonusDate &lt;= #{endTime}
+        </if>
+        order by bonusDate desc
+    </select>
+
+</mapper>

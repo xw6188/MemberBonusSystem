@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ben.sgzspringbootapi.mapper.LevelMapper">
+
+    <resultMap id="BaseResultMap" type="com.ben.sgzspringbootapi.entity.Level">
+        <result column="levelID" jdbcType="INTEGER" property="levelID" />
+        <result column="leveldesc" jdbcType="VARCHAR" property="leveldesc" />
+        <result column="totalamt" jdbcType="FLOAT" property="totalamt" />
+        <result column="nominate" jdbcType="FLOAT" property="nominate" />
+        <result column="duipeng" jdbcType="FLOAT" property="duipeng" />
+        <result column="dplevel1" jdbcType="FLOAT" property="dplevel1" />
+        <result column="dplevel2" jdbcType="FLOAT" property="dplevel2" />
+        <result column="dplevel3" jdbcType="FLOAT" property="dplevel3" />
+        <result column="discount" jdbcType="FLOAT" property="discount" />
+        <result column="dailylimit" jdbcType="FLOAT" property="dailylimit" />
+        <result column="allowance" jdbcType="FLOAT" property="allowance" />
+        <result column="levelType" jdbcType="VARCHAR" property="levelType" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="addNewLevel" parameterType="com.ben.sgzspringbootapi.entity.Level">
+        insert into Level (levelID, leveldesc, totalamt, nominate, duipeng, dplevel1, dplevel2, dplevel3, discount, dailylimit, allowance, levelType) VALUES(#{levelID},#{leveldesc},#{totalamt},#{nominate},#{duipeng},#{dplevel1},#{dplevel2},#{dplevel3},#{discount},#{dailylimit},#{allowance},#{levelType})
+    </insert>
+
+    <delete id="deleteLevel" parameterType="int">
+        delete from Level where LevelID = #{LevelID}
+    </delete>
+
+    <select id="selectLevel" resultType="com.ben.sgzspringbootapi.entity.Level">
+        select * from Level where LevelID = #{LevelID}
+    </select>
+
+    <select id="LevelList" resultType="com.ben.sgzspringbootapi.entity.Level">
+        SELECT * FROM Level
+    </select>
+
+    <update id="updateLevel" parameterType="com.ben.sgzspringbootapi.entity.Level" >
+        update LEVEL set
+        levelID = #{levelID},
+        leveldesc = #{leveldesc},
+        totalamt = #{totalamt},
+        nominate = #{nominate},
+        duipeng = #{duipeng},
+        dplevel1 = #{dplevel1},
+        dplevel2 = #{dplevel2},
+        dplevel3 = #{dplevel3},
+        discount = #{discount},
+        dailylimit = #{dailylimit},
+        allowance = #{allowance},
+        levelType = #{levelType}
+        where levelID = #{levelID}
+    </update>
+
+</mapper>
